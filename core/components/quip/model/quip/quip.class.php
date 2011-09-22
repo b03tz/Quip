@@ -79,7 +79,6 @@ class Quip {
      * behaviour.
      * @return Quip A unique Quip instance.
      */
-
     function __construct(modX &$modx,array $config = array()) {
         $this->modx =& $modx;
 
