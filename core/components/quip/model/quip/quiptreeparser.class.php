@@ -70,16 +70,36 @@ class QuipTreeParser {
         $this->last = null;
         $this->tpl = $tpl;
 
+        /* get depth offset */
+        $depthOffset = false;
+        foreach($array as $item) {
+            if (isset($item['depth'])) {
+                if ($depthOffset === false) {
+                    $depthOffset = $item['depth'];
+                }
+                
+                if ($item['depth'] < $depthOffset) {
+                    $depthOffset = $item['depth'];   
+                }
+            }   
+        }
+        
+        /* decrease every depth by offset */
+        foreach($array as $key => $item) {
+            if (isset($item['depth'])) {
+                $array[$key]['depth'] = $array[$key]['depth'] - $depthOffset;
+            }   
+        }
+        
         /* add a couple dummy "rows" to cap off formatting */
         $array[] = array();
         $array[] = array();
-
+        
         /* invoke our formatting function via callback */
         $output = array_map(array($this,'_iterate'),$array);
 
         /* output the results */
         $output = implode("\n", $output);
-
         return $output;
     }
 
