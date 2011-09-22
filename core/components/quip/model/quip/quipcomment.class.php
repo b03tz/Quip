@@ -65,7 +65,7 @@ class quipComment extends xPDOSimpleObject {
         }
         if (!empty($parent)) {
             $c->where(array(
-                'Ancestors.descendant' => $parent,
+                'Descendants.ancestor' => $parent,
             ));
         }
         $total = $modx->getCount('quipComment',$c);
